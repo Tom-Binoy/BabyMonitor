@@ -1,6 +1,10 @@
+//This code is not runing a intented can u say why?
+
 img = "";
+bool = false;
+blink = document.querySelector('.alert');
 status1 = null;
-objects = [];
+objects = [""];
 
 
 function setup(){
@@ -10,8 +14,9 @@ function setup(){
     video = createCapture(VIDEO);
     video.hide()
 
-    object = ml5.objectDetector("cocossd",modelLoaded)
-    document.getElementById("status").innerHTML = "CocoSSD Detecting Objects."
+        object = ml5.objectDetector("cocossd",modelLoaded)
+        document.getElementById("status").innerHTML = "CocoSSD Detecting Objects."
+
 }
 
 function modelLoaded(){
@@ -26,6 +31,7 @@ function gotResult(error,result){
     }else{
         console.log(result);
         objects = result;
+        status1 = false;
     }
 }
 
@@ -33,35 +39,25 @@ function draw(){
     image(video,0,0,700,500)
     if(status1){
         object.detect(video,gotResult)
-
-        for(i = 0; i < objects.length ; i++){
-
-            console.log("Object.length = "+objects.length);
-            label = cap(objects[i].label);
-            confidence = floor(objects[i].confidence*100)+"%";
-
-            x = objects[i].x;
-            y = objects[i].y;
-
-            height = objects[i].height;
-            width = objects[i].width;
-
-            fill("blue");
-            stroke("black");
-            textSize(15);
-            text(label+" "+confidence,x+0,y+10);
-            noFill();
-            strokeWeight(3);
-            stroke("rgb(156, 42, 243)");
-            rect(x,y,width,height);
-        document.getElementById("object").innerHTML = "CocoSSD has Detected "+objects.length+" Objects.";
-        document.getElementById("status").innerHTML = "CocoSSD has Detected Objects.";
-        }
-
     }
+    if(objects.length === 0)return;
+    else{
+        console.log("Object.length = "+objects.length);
+        document.getElementById("objects").innerHTML = "CocoSSD has Detected " + objects.length + " Objects.";
+
+        (objects.some(obj => obj.label === "person") ? document.getElementById("status").innerHTML = "CocoSSD can see Baby." (bool = false) : (bool = true));
+        objects = [];
+        status1 = true;
+    }
+
+    
 }
 function cap(word){
     word = word.toString()
     word = word.charAt(0).toUpperCase()
     return word;
 }
+
+setInterval(() => {
+    (bool === true ? blink.classList.add("active") : blink.classList.remove('active'))
+}, 3500);

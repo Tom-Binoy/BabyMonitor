@@ -21,3 +21,17 @@ font-size: 18px;
     position: fixed;
     width: 100%;
 }
+.alert{
+    background-color: blue;
+    text-align: center;
+    text-emphasis: none;
+    animation: pulse .5s infinite;
+}
+@keyframes pulse {
+    0%, 100%{
+        background-color: red;
+    }
+    50%{
+        background-color:transparent;
+    }
+}
