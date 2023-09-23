@@ -4,7 +4,7 @@ img = "";
 bool = false;
 blink = document.querySelector('.alert');
 status1 = null;
-objects = [""];
+objects = [];
 
 
 function setup(){
@@ -31,7 +31,6 @@ function gotResult(error,result){
     }else{
         console.log(result);
         objects = result;
-        status1 = false;
     }
 }
 
@@ -45,9 +44,8 @@ function draw(){
         console.log("Object.length = "+objects.length);
         document.getElementById("objects").innerHTML = "CocoSSD has Detected " + objects.length + " Objects.";
 
-        (objects.some(obj => obj.label === "person") ? document.getElementById("status").innerHTML = "CocoSSD can see Baby." (bool = false) : (bool = true));
+        (objects.some((obj) => obj.label === "person") ? document.getElementById("status").innerHTML = "CocoSSD can see Baby." (bool = false) : (bool = true));
         objects = [];
-        status1 = true;
     }
 
     
